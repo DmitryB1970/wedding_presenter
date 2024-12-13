@@ -22,6 +22,7 @@ public class WeddingService {
 
     public List<BookWeddingDto> findABookingInMonth(int month) {
         return weddingRepository.getAll().stream()
+                .filter(e -> e.getMonthNumber() == month)
                 .map(e -> bookWeddingMapper.convertToDto(e))
                 .collect(Collectors.toList());
     }
