@@ -14,19 +14,11 @@ import java.util.stream.Collectors;
 public class WeddingRepository {
 
     private final WeddingBookingStorage weddingBookingStorage;
-    private BookWedding bookWedding;
+
 
     public void save(int monthNumber, int dayNumber) {
-        Map<UUID, BookWedding> bookDay = new HashMap<>(weddingBookingStorage.getStorageMap());
-        bookWedding.setDayNumber(dayNumber);
-        bookWedding.setMonthNumber(monthNumber);
-        bookWedding.setBooked(true);
-        UUID uuid = UUID.randomUUID();
-        if (uuid != null && bookDay.containsKey(uuid)) {
-            throw new RuntimeException(
-                    String.format("Заказ под таким номером %s уже сделан", uuid));
-        }
-        bookDay.put(uuid, bookWedding);
+        BookWedding bookWedding = new BookWedding(UUID.randomUUID(), monthNumber, dayNumber, true);
+        weddingBookingStorage.getStorageMap().put(bookWedding.getUuid(), bookWedding);
     }
 
     public List<BookWedding> getAll() {
@@ -39,7 +31,7 @@ public class WeddingRepository {
                 .collect(Collectors.toList());
     }
 
-    public int bookingDaysInMonth(int month) {
+    public Integer bookingDaysInMonth(int month) {
         return findBookingInMonth(month).size();
     }
 

@@ -1,6 +1,6 @@
 package com.javaacademy.wedding_presenter.service;
 
-import com.javaacademy.wedding_presenter.dto.BookWeddingDto;
+import com.javaacademy.wedding_presenter.dto.CreateBookDto;
 import com.javaacademy.wedding_presenter.mapper.BookWeddingMapper;
 import com.javaacademy.wedding_presenter.repository.WeddingRepository;
 import lombok.RequiredArgsConstructor;
@@ -20,8 +20,9 @@ public class WeddingService {
         weddingRepository.save(monthNumber, dayNumber);
     }
 
-    public List<BookWeddingDto> findABookingInMonth(int month) {
+    public List<CreateBookDto> findABookingInMonth(int month) {
         return weddingRepository.getAll().stream()
+                .filter(e -> e.getMonthNumber() == month)
                 .map(e -> bookWeddingMapper.convertToDto(e))
                 .collect(Collectors.toList());
     }

@@ -6,10 +6,8 @@ import lombok.Data;
 
 @Data
 @AllArgsConstructor
-public class BookWeddingDto {
+public class CreateBookDto {
 
-    private int monthNumber;
-    private int dayNumber;
-    private boolean isBooked;
-
+    private Integer month;
+    private Integer day;
 }
